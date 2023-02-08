@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brechó Onlie</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+</head>
+
+<body>
+  <header>
+    <h1>Brechó Onlie</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="{% url 'produto:lista' %}">Todos</a></li>
+      {% for categoria in categorias %}
+      <li>
+        <a href="{% url 'produto:categoria' categoria.id %}">{{ categoria.nome }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+  <main>
+    <section class="produtos">
+      {% for produto in produtos %}
+      <div class="card" data-categoria="{{ produto.categoria.nome }}">
+        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" />
+        <h3>{{ produto.nome }}</h3>
+        <p>Preço: R${{ produto.preco|floatformat:2 }}</p>
+        <button><a href="{% url 'produto:subtrai_estoque' produto.id %}">Tenho interesse</a></button>
+
+      </div>
+      {% endfor %}
+    </section>
+  </main>
+  <footer>
+    <p>© 2023 Brechó Onlie</p>
+  </footer>
+</body>
+
+</html>
